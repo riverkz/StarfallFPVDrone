@@ -18,8 +18,15 @@ if SERVER then
     --
     --@include https://raw.githubusercontent.com/AstricUnion/Libs/refs/heads/main/hitbox.lua as hitbox
     --@include https://raw.githubusercontent.com/AstricUnion/Libs/refs/heads/main/holos.lua as holos
+    ---@module 'astricunion.libs.hitbox'
     local hitbox = require("hitbox")
-    require("holos")
+
+    ---@module 'astricunion.libs.holos'
+    local holosLib = require("holos")
+    ---@class Holo
+    local Holo = holosLib.Holo
+    local SubHolo = holosLib.SubHolo
+    local Rig = holosLib.Rig
 
     ---Function with holos
     local function holos(cameraAngle, kamikadze)
@@ -72,7 +79,7 @@ if SERVER then
     ---@param maxGas? number
     ---@return Drone
     function Drone:spawn(dronePos, droneAngle, kamikadze, cameraAngle, gasScale, maxGas, health)
-        kamikadze = kamikadze or true
+        kamikadze = kamikadze == false and false or true
         cameraAngle = cameraAngle or -45
         gasScale = gasScale or 5
         maxGas = maxGas or 500
