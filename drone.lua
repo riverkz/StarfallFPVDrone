@@ -190,20 +190,30 @@ if SERVER then
         self.drone:remove()
         -- If kamikadze, then explode drone
         if self.kamikadze then
-            pcall(function()
-                local exp = prop.create(self.drone:getPos(), Angle(), "models/props_phx/ww2bomb.mdl", true)
-                if exp then
-                    exp:setNoDraw(true)
-                    exp:applyDamage(1, self.driver, self.driver)
-                    exp:breakEnt()
-                end
-            end)
-        end
-        timer.simple(1, function()
-            self:resetDriver()
-            hook.run("FPVDroneDeath", self)
-        end)
-    end
+    pcall(function()
+        local pos = self.drone:getPos()
+
+        -- Красивый эффект
+        effect.create("Explosion", pos)
+
+        -- Урон
+        blastDamage(
+            self.driver or self.drone,
+            self.driver or self.drone,
+            pos,
+            350, -- радиус
+            250  -- максимальный урон
+        )
+
+        -- Звук
+        sound.play(
+            "BaseExplosionEffect.Sound",
+            pos,
+            100,
+            100
+        )
+    end)
+end
 
 
     ---Function to set propeller velocity
