@@ -214,6 +214,12 @@ if SERVER then
         )
     end)
 end
+ 
+timer.simple(1, function()
+        self:resetDriver()
+        hook.run("FPVDroneDeath", self)
+    end)
+end
 
 
     ---Function to set propeller velocity
